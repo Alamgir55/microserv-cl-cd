@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-depl
+spec:
+  relicas: 1
+  selector: 
+    matchLables:
+      app: auth
+  template: 
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: rook500/ticketing-microservices-site/auth
