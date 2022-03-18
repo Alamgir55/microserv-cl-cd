@@ -3,9 +3,9 @@ kind: Deployment
 metadata:
   name: auth-depl
 spec:
-  relicas: 1
+  replicas: 1
   selector: 
-    matchLables:
+    matchLabels:
       app: auth
   template: 
     metadata:
@@ -15,3 +15,16 @@ spec:
       containers:
         - name: auth
           image: rook500/ticketing-microservices-site/auth
+---
+apiVersion: v1 
+kind: Service
+metadata:
+  name: auth-srv
+spec: 
+  selector:
+    app: auth
+  ports: 
+    - name: auth
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
