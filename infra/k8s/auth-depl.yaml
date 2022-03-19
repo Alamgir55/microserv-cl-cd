@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: rook500/ticketing-microservices-site/auth
+          image: us.gcr.io/ticketing-dev-344501/auth
 ---
 apiVersion: v1 
 kind: Service
