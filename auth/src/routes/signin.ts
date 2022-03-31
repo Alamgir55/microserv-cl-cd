@@ -1,7 +1,9 @@
 import express, { Request, Response } from "express";
+
 import { body } from "express-validator";
-import { vaildateRequest } from "../middlewares/validate-request";
-import { BadRequestError } from "../errors/bad-request-error";
+
+import { vaildateRequest, BadRequestError } from "@rktickets555/common";
+
 import jwt from "jsonwebtoken";
 
 import { Password } from "../services/password";
