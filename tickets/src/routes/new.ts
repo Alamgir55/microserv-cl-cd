@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import { body } from "express-validator";
 import { requireAuth } from "@rktickets555/common";
 import { vaildateRequest } from "@rktickets555/common";
+import { Ticket } from "../models/ticket";
 
 const router = express.Router();
 
@@ -15,10 +16,19 @@ router.post(
       .withMessage("Price must be greater than 0"),
   ],
   vaildateRequest,
-  (req: Request, res: Response) => {
-    res.sendStatus(200);
+  async (Request, res: Response) => {
+    const { title, price } = Request.body;
+
+    const ticket = Ticket.build({
+      title,
+      price,
+      userId: Request.currentUser!.id,
+    });
+    //console.log(Request.currentUser);
+    await ticket.save();
+
+    res.status(201).send(ticket);
   }
 );
 
-//module.exports = router;
 export { router as createTicketRouter };
