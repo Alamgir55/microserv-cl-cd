@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node-dev --poll --watch '**/*.ts' src/index.ts",
+    "start": "nodemon --watch '**/*.ts' src/index.ts",
     "test": "jest --watchAll --no-cache"
   },
   "jest": {

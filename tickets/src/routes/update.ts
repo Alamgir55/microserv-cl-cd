@@ -7,6 +7,8 @@ import {
   NotAuthorizedError,
 } from "@rktickets555/common";
 import { Ticket } from "../models/ticket";
+import { TicketUpdatedPublisher } from "../events/publishers/ticket-updated-publisher";
+import { natsWrapper } from "../nats-wrapper";
 
 // declare module "express" {
 //   export interface Request {
@@ -46,10 +48,16 @@ router.put(
     });
     //console.log(Request.currentUser);
     await ticket.save();
+    new TicketUpdatedPublisher(natsWrapper.client).publish({
+      id: ticket.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId,
+    });
     res.send(ticket);
 
     //res.json((<any>req).currentUser);
-    console.log((<any>req).currentUser);
+    //console.log((<any>req).currentUser);
   }
 );
 
