@@ -17,13 +17,13 @@ router.post(
       .withMessage("Price must be greater than 0"),
   ],
   vaildateRequest,
-  async (Request, res: Response) => {
-    const { title, price } = Request.body;
+  async (req: Request, res: Response) => {
+    const { title, price } = req.body;
 
     const ticket = Ticket.build({
       title,
       price,
-      userId: Request.currentUser!.id,
+      userId: req.currentUser!.id,
     });
     //console.log(Request.currentUser);
     await ticket.save();
