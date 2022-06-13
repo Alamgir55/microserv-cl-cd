@@ -9,6 +9,7 @@
   },
   "jest": {
     "preset": "ts-jest",
+    "testTimeout": 600000,
     "testEnvironment": "node",
     "setupFilesAfterEnv": [
       "./src/test/setup.ts"
@@ -18,7 +19,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@rktickets555/common": "^1.0.51",
+    "@rktickets555/common": "^1.0.52",
     "@types/cookie-session": "^2.0.44",
     "@types/events": "^3.0.0",
     "@types/express": "^4.17.13",
