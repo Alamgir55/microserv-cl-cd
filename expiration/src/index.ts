@@ -12,18 +12,21 @@ const start = async () => {
     throw new Error("NATS_CLUSTER_ID must be defined");
   }
 
-  await natsWrapper.connect(
-    process.env.NATS_CLUSTER_ID,
-    process.env.NATS_CLIENT_ID,
-    process.env.NATS_URL
-  );
-  natsWrapper.client.on("close", () => {
-    console.log("NATS connection closed!");
-    process.exit();
-  });
-
-  process.on("SIGINT", () => natsWrapper.client.close());
-  process.on("SIGTERM", () => natsWrapper.client.close());
+  try {
+    await natsWrapper.connect(
+      process.env.NATS_CLUSTER_ID,
+      process.env.NATS_CLIENT_ID,
+      process.env.NATS_URL
+    );
+    natsWrapper.client.on("close", () => {
+      console.log("NATS connection closed!");
+      process.exit();
+    });
+    process.on("SIGINT", () => natsWrapper.client.close());
+    process.on("SIGTERM", () => natsWrapper.client.close());
+  } catch (err) {
+    console.log(err);
+  }
 
   new OrderCreatedListener(natsWrapper.client).listen();
 };
