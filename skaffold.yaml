@@ -1,0 +1,62 @@
+apiVersion: skaffold/v2beta27
+kind: Config
+metadata:
+  name: ticketing-microservices-site
+build:
+  # local:
+  #   push: false
+  googleCloudBuild:
+    projectId: ticketing-dev2-352905
+  artifacts:
+    - image: us.gcr.io/ticketing-dev2-352905/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .  
+    - image: us.gcr.io/ticketing-dev2-352905/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
+    - image: us.gcr.io/ticketing-dev2-352905/tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .       
+    - image: us.gcr.io/ticketing-dev2-352905/orders
+      context: orders
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .  
+    - image: us.gcr.io/ticketing-dev2-352905/expiration
+      context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: us.gcr.io/ticketing-dev2-352905/payments
+      context: payments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .                                                       
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
