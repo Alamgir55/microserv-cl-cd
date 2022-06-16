@@ -4,6 +4,8 @@ const Header = ({ currentUser }) => {
   const links = [
     !currentUser && { label: "Sign Up", href: "/auth/signup" },
     !currentUser && { label: "Sign In", href: "/auth/signin" },
+    currentUser && { label: "Sell Tickets", href: "/tickets/new" },
+    currentUser && { label: "My Orders", href: "/orders" },
     currentUser && { label: "Sign Out", href: "/auth/signout" },
   ]
     .filter((linkConfig) => linkConfig)
@@ -20,9 +22,7 @@ const Header = ({ currentUser }) => {
   return (
     <nav className="navbar navber-light bg-light">
       <Link href="/">
-        <div className="container">
-          <a className="navbar-brand">GitTix</a>
-        </div>
+        <a className="navbar-brand">GitTix</a>
       </Link>
 
       <div className="d-flex justify-content-end">
